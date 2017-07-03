@@ -1,0 +1,22 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+class epsilonGreedy:
+
+    def __init__(self, ep=0.01 , N=10):
+        self.e = ep
+        self.N = N
+        self.Q = np.random.random(self.N)*0.0001
+        self.count = np.zeros(self.N)
+
+    def pullArms(self):
+        rand = np.random.random()
+        if rand<self.e:
+            return np.random.randint(self.N)
+        else:
+            return np.argmax(self.Q)
+
+    def updateVal(self, index , reward):
+        self.count[index]+=1
+        self.Q[index] += (reward - self.Q[index])/self.count[index]
+        
